@@ -21,7 +21,7 @@ HISTFILESIZE=2000
 shopt -s checkwinsize
 
 # make less more friendly for non-text input files, see lesspipe(1)
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+#[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 # set variable identifying the chroot you work in (used in the prompt below)
 if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
@@ -33,8 +33,7 @@ case "$TERM" in
     xterm-color|*-256color) color_prompt=yes;;
 esac
 
-force_color_prompt=yes
-
+#force_color_prompt=yes
 if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
 	# We have color support; assume it's compliant with Ecma-48
@@ -71,11 +70,6 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
-# some more ls aliases
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
-
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
@@ -94,13 +88,14 @@ fi
 ## MINHO ___________________________________________________________________________
 ## (Below are my custom .bashrc configurations)
 # Aliases
-alias tmux='tmux -2 -f ~/.config/tmux/tmux.conf'
-alias matlab='matlab2020a -nodesktop -nosplash'    # CHANGE IF NEEDED
-alias matlabgui='matlab2020a'                      # CHANGE IF NEEDED
+#alias tmux='tmux -2 -f ~/.config/tmux/tmux.conf'
+alias matlab='matlab -nodesktop -nosplash'    # CHANGE IF NEEDED
+alias matlabgui='matlab'                      # CHANGE IF NEEDED
 
 # Includes Neovim (nvim) to the current path
 export PATH="$PATH:/opt/nvim-linux64/bin"
 export EDITOR=nvim
+export PYENVS="$HOME/pyenvs"
 
 # Automatic enabling of SSH-Agent
 SSH_ENV="$HOME/.ssh/agent-environment"
@@ -122,4 +117,9 @@ if [ -f "${SSH_ENV}" ]; then
     }
 else
     start_agent;
+fi
+
+# Launches TMUX multiplexer by default (might delete later if not good idea)
+if [ -x "$(command -v tmux)" ] && [ -n "${DISPLAY}" ] && [ -z "${TMUX}" ]; then
+    exec tmux new-session -A -s ${USER} >/dev/null 2>&1
 fi
