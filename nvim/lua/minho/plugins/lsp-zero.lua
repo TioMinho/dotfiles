@@ -51,6 +51,9 @@ return {
             ensure_installed = {'clangd', 'html', 'cssls', 'tsserver', 'julials', 'ltex', 'pylsp'},
             handlers = {
             lsp_zero.default_setup,
+            julials = function()
+                require('lspconfig').julials.setup({})
+            end,
             lua_ls = function()
                 local lua_opts = lsp_zero.nvim_lua_ls()
                 require('lspconfig').lua_ls.setup(lua_opts)

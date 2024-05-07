@@ -120,6 +120,21 @@ else
 fi
 
 # Launches TMUX multiplexer by default (might delete later if not good idea)
-if [ -x "$(command -v tmux)" ] && [ -n "${DISPLAY}" ] && [ -z "${TMUX}" ]; then
-    exec tmux new-session -A -s ${USER} >/dev/null 2>&1
-fi
+#if [ -x "$(command -v tmux)" ] && [ -n "${DISPLAY}" ] && [ -z "${TMUX}" ]; then
+#    exec tmux new-session -A -s ${USER} >/dev/null 2>&1
+#fi
+
+# >>> juliaup initialize >>>
+
+# !! Contents within this block are managed by juliaup !!
+
+case ":$PATH:" in
+    *:/home/minho/.juliaup/bin:*)
+        ;;
+
+    *)
+        export PATH=$HOME/.juliaup/bin${PATH:+:${PATH}}
+        ;;
+esac
+
+# <<< juliaup initialize <<<
