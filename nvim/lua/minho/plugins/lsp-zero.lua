@@ -25,6 +25,7 @@ return {
         local mason_lspconfig = require('mason-lspconfig')
 
         local cmp_select = { behavior = cmp.SelectBehavior.Select }
+        local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
         -- Configures lsp-zero
         lsp_zero.on_attach( function(client, bufnr)
@@ -47,20 +48,10 @@ return {
 
         -- Configures mason
         mason.setup({})
-        mason_lspconfig.setup({
-            ensure_installed = {'clangd', 'html', 'cssls', 'tsserver', 'julials', 'ltex', 'pylsp'},
-            handlers = {
-            lsp_zero.default_setup,
-            julials = function()
-                require('lspconfig').julials.setup({})
-            end,
-            lua_ls = function()
-                local lua_opts = lsp_zero.nvim_lua_ls()
-                require('lspconfig').lua_ls.setup(lua_opts)
-            end
-          }
-        })
+        mason_lspconfig.setup({})
 
+        require('lspconfig').julials.setup({})
+        
         -- Configures cmp
         cmp.setup({
             sources = {
