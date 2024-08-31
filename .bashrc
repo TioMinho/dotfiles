@@ -27,6 +27,8 @@ fi
 
 # Definitions (env. variables, functions, etc.)
 export EDITOR=nvim
+export PATH=$PATH:/opt/nvim-linux64/bin
+export GPG_TTY="$(tty)"
 
 # Aliases
 alias ls='ls --color=auto'

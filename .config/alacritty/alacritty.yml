@@ -1,0 +1,27 @@
+#
+# alacritty.toml
+# Configuration file for the alacritty terminal emulator
+#
+live_config_reload: true
+
+env:
+    WINIT_X11_SCALE_FACTOR: "1.0"
+
+window:
+    decorations: "None"
+    opacity: 0.9
+
+font:
+    size: 12
+    normal: 
+        family: "Noto Sans Mono"
+        style: "Regular"
+    bold: 
+        family: "Noto Sans Mono"
+        style: "Bold"
+    italic: 
+        family: "Noto Sans Mono"
+        style: "Italic"
+    bold_italic: 
+        family: "Noto Sans Mono"
+        style: "Bold Italic"
