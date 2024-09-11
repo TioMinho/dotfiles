@@ -38,6 +38,8 @@ bindsym XF86AudioMicMute exec --no-startup-id wpctl set-mute @DEFAULT_AUDIO_SOUR
 bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +10%
 bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 10%-
 
+bindsym XF86Display exec --no-startup-id arandr
+
 # Navigation keys
 set $up k
 set $down j
