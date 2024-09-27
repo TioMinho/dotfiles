@@ -34,8 +34,8 @@ export GPG_TTY="$(tty)"
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 
-alias matlab='matlab -nodekstop -nosplash'
-alias matlabgui='matlab'
+alias matlabcli='matlab -nodesktop -nosplash'
+alias matlabgui='matlab -nosplash'
 
 # >>> juliaup initialize >>>
 
