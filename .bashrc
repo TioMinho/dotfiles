@@ -27,7 +27,7 @@ fi
 
 # Definitions (env. variables, functions, etc.)
 export EDITOR=nvim
-export PATH=$PATH:/opt/nvim-linux64/bin
+export PATH=$PATH:/opt/nvim-linux64/bin:$HOME/.juliaup/bin
 export GPG_TTY="$(tty)"
 
 # Aliases
@@ -36,18 +36,3 @@ alias grep='grep --color=auto'
 
 alias matlabcli='matlab -nodesktop -nosplash'
 alias matlabgui='matlab -nosplash'
-
-# >>> juliaup initialize >>>
-
-# !! Contents within this block are managed by juliaup !!
-
-case ":$PATH:" in
-    *:$HOME/.juliaup/bin:*)
-        ;;
-
-    *)
-        export PATH=$HOME/.juliaup/bin${PATH:+:${PATH}}
-        ;;
-esac
-
-# <<< juliaup initialize <<<

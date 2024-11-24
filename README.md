@@ -11,10 +11,6 @@ I will be using X11 (because of GPU) and start my window managers using `.xinitr
 My current setup is using the lazy.nvim plugin manager.
 I try to keep stuff minimal. Check the folder `nvim/` for the specific configs.
 
-#### tmux
-
-I 
-
 ### On softwares/utilities
 
 Here I'll keep a list of softwares/utilities that I use in most of my Linux systems.
@@ -30,4 +26,4 @@ Here I'll keep a list of softwares/utilities that I use in most of my Linux syst
 - *Gaming*: `retroarch`, `steam`
 - *Utilities*: `dmenu`, `fonts-noto`, `evince`, `scrot`, `slock`, `surf`, `syncthing`, `btop`
 
-Ps.: Currently I'm trying Wireplumber as a replacement for PulseAudio+JACK
+Ps.: Currently I'm trying `Wireplumber` as a replacement for `PulseAudio`+`JACK`

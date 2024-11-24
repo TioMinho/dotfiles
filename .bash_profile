@@ -15,18 +15,3 @@ export VDPAU_DRIVER=va_gl
 if [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]]; then
   startx -- -keeptty >~/.xorg.log 2>&1
 fi
-
-# >>> juliaup initialize >>>
-
-# !! Contents within this block are managed by juliaup !!
-
-case ":$PATH:" in
-    *:$HOME/.juliaup/bin:*)
-        ;;
-
-    *)
-        export PATH=$HOME/.juliaup/bin${PATH:+:${PATH}}
-        ;;
-esac
-
-# <<< juliaup initialize <<<
