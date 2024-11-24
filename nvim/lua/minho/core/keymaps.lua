@@ -46,11 +46,6 @@ keymap("n", "<A-k>", ":m .-2<CR>==", opts)
 -- Clears search hilighting
 keymap("n", "<leader>cs", ":nohlsearch<CR>", opts)
 
--- INSERT MODE --
--- Quick leave
-keymap("i", "jk", "<ESC>", opts)
-keymap("i", "kj", "<ESC>", opts)
-
 -- VISUAL MODE --
 -- Persisent ident mode
 keymap("v", "<A-l>", ">gv^", opts)
