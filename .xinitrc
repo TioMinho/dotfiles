@@ -18,4 +18,4 @@ feh --bg-scale ~/Pictures/wallpapers/01.png &
 picom &
 
 # Starts window manager (current: i3)
-exec i3
+exec dwm
