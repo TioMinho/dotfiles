@@ -14,6 +14,12 @@ fi
 # Wallpaper
 feh --bg-scale ~/Pictures/wallpapers/01.png &
 
+# Statusbar loop (quick&dirty before doing a shell script)
+while true; do
+    xsetroot -name "$(cat /sys/class/power_supply/BAT1/capacity)|$(date +"%F %R")"
+    sleep 1m
+done &
+
 # Compositor
 picom &
 
