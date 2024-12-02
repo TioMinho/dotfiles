@@ -1,0 +1,52 @@
+#!/bin/bash
+#
+# dwm status-bar
+#  This script collects updated information about the system, time/weather, and the
+#  user, and displays in the dwm status-bar
+
+st_resources () {
+    local CPU_LOAD=$(cat /proc/loadavg | awk '{printf $1}')
+    local CPU_TEMP=$(sensors | awk '/Package id 0/ {printf $4}')
+    local MEM_AVAL=$(free --si -h | awk '/Mem/ {printf "%s/%s", $3, $2}')
+    local HDD_AVAL=$(df -h | awk '/\/$/ {printf "%4s/%4s", $3, $2}')
+
+    printf "[ $CPU_LOAD($CPU_TEMP)|  $MEM_AVAL| $HDD_AVAL]"
+}
+
+st_internet () {
+    local CONNINFO="$(nmcli connection show --active)"
+
+    if [ -z $(echo -e "$CONNINFO" | grep ethernet) ]; then
+        printf "[󰖩 $(echo -e "$CONNINFO" | awk '/wifi/ {printf $1}')]"
+    else
+        printf "[󰈀 $(echo -e "$CONNINFO" | awk '/ethernet/ {printf $1}')]"
+    fi
+}
+
+st_weather () {
+    printf "[ $(curl -s wttr.in/?format="%t")]"
+}
+
+st_time () {
+    printf "[$(date +"󰃭 %D (%a)][󰥔 %R")]"
+}
+
+st_battery () {
+    local bat_icons=("󰂃" "󰁹" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰂄")
+    local bat_level=$(cat /sys/class/power_supply/BAT1/capacity)
+    
+    if [ "$(cat /sys/class/power_supply/BAT1/status)" = "Charging" ]; then
+        printf "[${bat_icons[10]} ${bat_level}%%]"
+    elif [ "$bat_level" -ge 20 ]; then
+        printf "[${bat_icons[${bat_level:0:1}]} ${bat_level}%%]"
+    else
+        printf "[${bat_icons[0]} ${bat_level}%%]"
+    fi
+}
+
+# == STATUS BAR ==
+while true; do
+    xsetroot -name "$(st_resources)$(st_internet)$(st_weather)$(st_time)$(st_battery)"
+    sleep $((60 - 10#$(date +%S) ))
+done
+# == ==

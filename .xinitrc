@@ -11,17 +11,10 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
  unset f
 fi
 
-# Wallpaper
+# Background processes (wallpaper, compositor, statusbar, ...)
 feh --bg-scale ~/Pictures/wallpapers/01.png &
-
-# Statusbar loop (quick&dirty before doing a shell script)
-while true; do
-    xsetroot -name "$(cat /sys/class/power_supply/BAT1/capacity)|$(date +"%F %R")"
-    sleep 1m
-done &
-
-# Compositor
 picom &
+dwm-statusbar &
 
 # Starts window manager (current: i3)
 exec dwm

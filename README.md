@@ -19,7 +19,7 @@ In `dmenu`, I have no patches
 In `st`, I have the `alpha`, `anysize`, and `scrollback` patches.
 
 TO-DO:
-- [ ] *Status-bar*: Music | Mail | System Monitor | Weather | Datetime + Icons?
+- [x] *Status-bar*: System Monitor | Internet | Weather | Datetime | Battery
 - [ ] *Notifications*: Use `dunst` + Create scripts to show volume/brightness on change
 - [x] *Color*: Find a better colorscheme (monokai?)
 - [ ] *Wallpaper*: Use cronjob/bash-script to change wallpaper dynamically
