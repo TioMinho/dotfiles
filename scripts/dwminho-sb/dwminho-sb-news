@@ -1,0 +1,6 @@
+#!/bin/bash
+#
+# dwminho-sb-news
+#  A newsletter/RSS-feed module for the dwminho-blocks status bar
+
+printf " "

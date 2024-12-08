@@ -1,0 +1,16 @@
+#!/bin/bash
+#
+# dwminho-sb-internet
+#  A internet/VPN module for the dwminho-blocks status bar
+
+if [ "$(cat /sys/class/net/w*/operstate 2>/dev/null)" = "up" ]; then
+    NET_ICON="󰖩"
+elif [ "$(cat /sys/class/net/e*/operstate 2>/dev/null)" = "up" ]; then
+    NET_ICON="󰈀"
+else
+    NET_ICON="󰪎"
+fi 
+
+[ "$(nordvpn status | awk '/^Status:/ {print $2}')" = "Connected" ] && VPN_ICON=" [VPN]" || VPN_ICON=""
+
+printf "${NET_ICON}${VPN_ICON}"

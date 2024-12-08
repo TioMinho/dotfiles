@@ -1,0 +1,6 @@
+#!/bin/bash
+#
+# dwminho-sb-bluetooth
+#  A bluetooth module for the dwminho-blocks status bar
+
+printf ""

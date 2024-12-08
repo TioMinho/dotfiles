@@ -1,0 +1,26 @@
+#!/bin/bash
+#
+# dwminho-sb-volume
+#  A volume module for the dwminho-blocks status bar
+
+case $BLOCK_BUTTON in
+    1) setsid -f st -c st-floating -g 140x40 -e htop -u $USER ;;
+    6) st -e nvim "$0" ;;
+esac
+
+VOLUME=$(wpctl get-volume @DEFAULT_AUDIO_SINK@)
+
+if [ -n "$(echo $VOLUME | awk '/MUTED/')" ]; then
+    VOL_ICON="󰝟"
+else
+    VOL_LEVL=$(echo $VOLUME | sed "s/\.//g" | awk '{printf "%d", $2}')
+    if [ "$VOL_LEVL" -ge 70 ]; then
+        VOL_ICON="󰕾"
+    elif [ "$VOL_LEVL" -ge 30 ]; then
+        VOL_ICON="󰖀"
+    else
+        VOL_ICON="󰕿"
+    fi
+fi
+
+printf "$VOL_ICON"

@@ -1,0 +1,10 @@
+#!/bin/bash
+#
+# dwminho-sb-power
+#  A power/login module for the dwminho-blocks status bar
+
+case $BLOCK_BUTTON in
+    1) dunstify "TEST" ;;
+esac
+
+printf "⏻ "

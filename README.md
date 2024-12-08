@@ -14,7 +14,7 @@ I try to keep stuff minimal. Check the folder `nvim/` for the specific configs.
 #### dwm + dmenu + st
 
 I'm trying some suckless stuff and loving it. Currently, I have custom builds of `dwm` (6.5) + `dmenu` (5.3) + `st` (0.9.2).
-In `dwm`, I currently use the following patches: `warp`, `vanity-gaps`, `swallow`
+In `dwm`, I currently use the following patches: `warp`, `vanity-gaps`, `alwayscenter`, `swallow`, `statuscmd`
 In `dmenu`, I have no patches
 In `st`, I have the `alpha`, `anysize`, and `scrollback` patches.
 

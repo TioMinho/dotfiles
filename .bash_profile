@@ -7,6 +7,7 @@
 [[ -f ~/.bashrc ]] && . ~/.bashrc
 
 # Environment variables
+export PATH=$PATH:$HOME/.local/bin:/opt/nvim-linux64/bin:$HOME/.juliaup/bin
 export LIBVA_DRIVER_PATH=/usr/lib/dri/
 export LIBVA_DRIVER_NAME=iHD
 export VDPAU_DRIVER=va_gl

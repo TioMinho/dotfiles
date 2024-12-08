@@ -1,0 +1,15 @@
+#!/bin/bash
+#
+# dwminho-st-battery
+#  Battery module for the dwminho-blocks status bar
+
+bat_stats=$(cat /sys/class/power_supply/BAT?/status)
+bat_level=$(cat /sys/class/power_supply/BAT?/capacity)
+
+if   [ "$bat_level" -ge 75 ]; then [ "$bat_stats" = "Charging" ] && bat_icon="󱊦" || bat_icon="󱊣"
+elif [ "$bat_level" -ge 50 ]; then [ "$bat_stats" = "Charging" ] && bat_icon="󱊥" || bat_icon="󱊢"
+elif [ "$bat_level" -ge 25 ]; then [ "$bat_stats" = "Charging" ] && bat_icon="󱊤" || bat_icon="󱊡"
+else                               [ "$bat_stats" = "Charging" ] && bat_icon="󰢟" || bat_icon="󱃍"
+fi
+
+printf "${bat_icon} ${bat_level}%%"

@@ -1,0 +1,11 @@
+#!/bin/bash
+#
+# dwminho-sb-time
+#  A time/calendar module for the dwminho-blocks status bar
+
+case $BLOCK_BUTTON in
+    1) echo -n "AAAAAAAAAAAA" ;;
+    3) echo -n "BBBBBBBBBBBB" ;;
+esac
+
+printf '%(󰃭 %d/%m/%y (%a) 󰥔 %R)T'
