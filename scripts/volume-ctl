@@ -1,0 +1,34 @@
+#!/bin/bash
+#
+# volume-ctl
+#   Helper script for volume control
+
+kill -40 $(pidof dwmblocks)     # Signals the dwminho-blocks slot
+
+### Volume control commands ###
+if [[ $1 = 'increase' ]]; then
+    wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ --limit 1.5
+elif [[ $1 = 'decrease' ]]; then
+    wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+elif [[ $1 = 'mute' ]]; then
+    wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+fi
+
+### Volume display notification ###
+ICON="/usr/share/icons/Papirus-Dark/16x16/actions/audio-volume-high.svg"
+
+VOLUME=$(wpctl get-volume @DEFAULT_AUDIO_SINK@)
+VOL_LEVL=$(echo "$VOLUME" | sed "s/\.//g" | awk '{printf "%d", $2}')
+
+if [[ -n "$(echo $VOLUME | awk '/MUTED/')" ]]; then
+    PROGRESS_BAR=$(for i in `seq 1 $(( VOL_LEVL / 5))`; do printf '▒'; done)
+    PROGRESS_VOL="MUTE"
+else
+    PROGRESS_BAR=$(for i in `seq 1 $(( VOL_LEVL / 5))`; do printf '█'; done)
+    PROGRESS_VOL="${VOL_LEVL}%"
+fi
+
+PROGRESS_PAD=$(for i in `seq 0 $(( 30 - VOL_LEVL / 5))`; do printf ' '; done)
+PROGRESS_BAR=$(printf -- '%s%s[%s]' "$PROGRESS_BAR" "$PROGRESS_PAD" "$PROGRESS_VOL")
+
+dunstify -a "volume-ctl" -u low -I "$ICON" -h string:x-dunst-stack-tag:volumectl "$PROGRESS_BAR"
