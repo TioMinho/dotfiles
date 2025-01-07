@@ -7,7 +7,7 @@ kill -40 $(pidof dwmblocks)     # Signals the dwminho-blocks slot
 
 ### Volume control commands ###
 if [[ $1 = 'increase' ]]; then
-    wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ --limit 1.5
+    wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ --limit 1.2
 elif [[ $1 = 'decrease' ]]; then
     wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
 elif [[ $1 = 'mute' ]]; then
@@ -21,14 +21,17 @@ VOLUME=$(wpctl get-volume @DEFAULT_AUDIO_SINK@)
 VOL_LEVL=$(echo "$VOLUME" | sed "s/\.//g" | awk '{printf "%d", $2}')
 
 if [[ -n "$(echo $VOLUME | awk '/MUTED/')" ]]; then
-    PROGRESS_BAR=$(for i in `seq 1 $(( VOL_LEVL / 5))`; do printf '▒'; done)
+    BAR="┇"
     PROGRESS_VOL="MUTE"
 else
-    PROGRESS_BAR=$(for i in `seq 1 $(( VOL_LEVL / 5))`; do printf '█'; done)
+    BAR="┃"
     PROGRESS_VOL="${VOL_LEVL}%"
 fi
 
-PROGRESS_PAD=$(for i in `seq 0 $(( 30 - VOL_LEVL / 5))`; do printf ' '; done)
-PROGRESS_BAR=$(printf -- '%s%s[%s]' "$PROGRESS_BAR" "$PROGRESS_PAD" "$PROGRESS_VOL")
 
-dunstify -a "volume-ctl" -u low -I "$ICON" -h string:x-dunst-stack-tag:volumectl "$PROGRESS_BAR"
+PROGRESS_BAR=$(for i in `seq 1 $(( VOL_LEVL / 5))`; do echo -n "$BAR"; done)
+PROGRESS_PAD=$(for i in `seq 0 $(( 23 - VOL_LEVL / 5))`; do echo -ne '─'; done)
+
+printf -v PROGRESS_TXT -- "%s%s [%4s]" "$PROGRESS_BAR" "$PROGRESS_PAD" "$PROGRESS_VOL"
+
+dunstify -a "volume-ctl" -u low -I "$ICON" -h string:x-dunst-stack-tag:volumectl "$PROGRESS_TXT"

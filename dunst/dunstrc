@@ -8,7 +8,7 @@
     follow = mouse
 
     ### Geometry ###
-    width = 300
+    width = 224
     height = 300
     origin = top-right
 
@@ -31,7 +31,7 @@
 
     padding = 8
     horizontal_padding = 8
-    text_icon_padding = 0
+    text_icon_padding = 6
 
     frame_width = 1
     frame_color = "#AE81FF"
@@ -42,7 +42,7 @@
     sort = yes
 
     ### Text ###
-    font = Noto Sans Mono 9
+    font = Noto Sans Mono 8
 
     line_height = 0
     markup = full
@@ -130,14 +130,14 @@
     timeout = 10
 
 [urgency_normal]
-    background = "#FD971F"
+    background = "#2A2A2A"
     foreground = "#E9E9E9"
     frame_color = "#FDA135"
     highlight = "#E9E9E9"
     timeout = 10
 
 [urgency_critical]
-    background = "#F92672"
+    background = "#4A0B22"
     foreground = "#E9E9E9"
     frame_color = "#C71E5B"
     highlight = "#E9E9E9"

@@ -3,13 +3,23 @@
 # dwminho-st-battery
 #  Battery module for the dwminho-blocks status bar
 
-bat_stats=$(cat /sys/class/power_supply/BAT?/status)
-bat_level=$(cat /sys/class/power_supply/BAT?/capacity)
+BAT_STATS=$(cat /sys/class/power_supply/BAT?/status)
+BAT_LEVEL=$(cat /sys/class/power_supply/BAT?/capacity)
 
-if   [ "$bat_level" -ge 75 ]; then [ "$bat_stats" = "Charging" ] && bat_icon="󱊦" || bat_icon="󱊣"
-elif [ "$bat_level" -ge 50 ]; then [ "$bat_stats" = "Charging" ] && bat_icon="󱊥" || bat_icon="󱊢"
-elif [ "$bat_level" -ge 25 ]; then [ "$bat_stats" = "Charging" ] && bat_icon="󱊤" || bat_icon="󱊡"
-else                               [ "$bat_stats" = "Charging" ] && bat_icon="󰢟" || bat_icon="󱃍"
+### BATTERY NOTIFICATIONS ###
+if [[ $BAT_LEVEL -le 20 ]]; then
+    ICON="/usr/share/icons/Papirus-Dark/16x16/panel/battery-020.svg"
+    dunstify -a "battery-notify" -u normal -I "$ICON" -h string:x-dunst-stack-tag:batterynotify "WARNING: Battery below 25%"
+elif [[ $BAT_LEVEL -le 10 ]]; then
+    ICON="/usr/share/icons/Papirus-Dark/16x16/panel/battery-010.svg"
+    dunstify -a "battery-notify" -u critical -I "$ICON" -h string:x-dunst-stack-tag:batterynotify "WARNING: Battery below 10% Plug-in the charger!"
 fi
 
-printf "${bat_icon} ${bat_level}%%"
+### BATTERY STATUS DISPLAY ###
+if   [ "$BAT_LEVEL" -ge 75 ]; then [ "$BAT_STATS" = "Charging" ] && BAT_ICON="󱊦" || BAT_ICON="󱊣"
+elif [ "$BAT_LEVEL" -ge 50 ]; then [ "$BAT_STATS" = "Charging" ] && BAT_ICON="󱊥" || BAT_ICON="󱊢"
+elif [ "$BAT_LEVEL" -ge 26 ]; then [ "$BAT_STATS" = "Charging" ] && BAT_ICON="󱊤" || BAT_ICON="󱊡"
+else                               [ "$BAT_STATS" = "Charging" ] && BAT_ICON="󰢟" || BAT_ICON="󱃍"
+fi
+
+printf "${BAT_ICON} ${BAT_LEVEL}%%"
