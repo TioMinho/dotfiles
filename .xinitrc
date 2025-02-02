@@ -16,6 +16,10 @@ feh --bg-scale ~/Pictures/wallpapers/01.png &
 picom &
 dunst &
 dwmblocks &
+gammastep &
 
-# Starts window manager (current: i3)
+wmname LG3D &   # This is an ugly workaround to make lame Java apps (like MATLAB) 
+                # to work properly. Long-term solution is to stop using MATLAB
+
+# Starts window manager
 exec dwm
