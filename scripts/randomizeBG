@@ -1,0 +1,15 @@
+#!/bin/bash
+#
+# randomizeBG
+# This is a short script for randomly changing the background using FEH
+#
+# NOTE: I'm not using the '--randomize' flag because I plan to do a transition
+#       between BGs. I tested magick but unfortunately it was a bit slow
+
+BG_FOLDER=~/Pictures/wallpapers
+
+while true; do
+    BG_FILE=$(ls $BG_FOLDER/*.png | shuf -n 1)
+    feh --bg-scale --no-fehbg $BG_FILE
+    sleep 5m
+done

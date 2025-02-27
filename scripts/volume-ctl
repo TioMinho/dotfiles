@@ -3,7 +3,7 @@
 # volume-ctl
 #   Helper script for volume control
 
-kill -40 $(pidof dwmblocks)     # Signals the dwminho-blocks slot
+kill -41 $(pidof dwmblocks)     # Signals the dwminho-blocks slot
 
 ### Volume control commands ###
 if [[ $1 = 'increase' ]]; then
@@ -12,6 +12,9 @@ elif [[ $1 = 'decrease' ]]; then
     wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
 elif [[ $1 = 'mute' ]]; then
     wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+elif [[ $1 = 'mutemic' ]]; then
+    wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
+    exit 0
 fi
 
 ### Volume display notification ###
@@ -34,4 +37,4 @@ PROGRESS_PAD=$(for i in `seq 0 $(( 23 - VOL_LEVL / 5))`; do echo -ne '─'; done
 
 printf -v PROGRESS_TXT -- "%s%s [%4s]" "$PROGRESS_BAR" "$PROGRESS_PAD" "$PROGRESS_VOL"
 
-dunstify -a "volume-ctl" -u low -I "$ICON" -h string:x-dunst-stack-tag:volumectl "$PROGRESS_TXT"
+dunstify -a "volume-ctl" -u low -I "$ICON" -h string:x-dunst-stack-tag:volumectl "" "$PROGRESS_TXT"

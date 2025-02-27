@@ -3,6 +3,13 @@
 # dwminho-sb-internet
 #  A internet/VPN module for the dwminho-blocks status bar
 
+#CLICKING
+case $BLOCK_BUTTON in
+    1) setsid -f st -c st-floating -g 80x40 -e nmtui ;;
+    6) st -e nvim "$0" ;;
+esac
+
+# PRINTING
 if [ "$(cat /sys/class/net/w*/operstate 2>/dev/null)" = "up" ]; then
     NET_ICON="󰖩"
 elif [ "$(cat /sys/class/net/e*/operstate 2>/dev/null)" = "up" ]; then

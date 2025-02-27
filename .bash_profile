@@ -12,6 +12,10 @@ export LIBVA_DRIVER_PATH=/usr/lib/dri/
 export LIBVA_DRIVER_NAME=iHD
 export VDPAU_DRIVER=va_gl
 
+export XDG_CONFIG_HOME=$HOME/.config
+export XDG_DATA_HOME=$HOME/.local/share
+export XDG_DATA_DIRS=/usr/local/share:/usr/share
+
 # Autostart X on login (if tty1)
 if [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]]; then
   startx -- -keeptty >~/.xorg.log 2>&1
