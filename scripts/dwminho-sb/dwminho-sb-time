@@ -1,6 +1,0 @@
-#!/bin/bash
-#
-# dwminho-sb-time
-#  A time/calendar module for the dwminho-blocks status bar
-
-printf '%(󰃭 %d/%m/%y (%a) 󰥔 %R)T'

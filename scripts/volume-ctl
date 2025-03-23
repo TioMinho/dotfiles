@@ -3,7 +3,7 @@
 # volume-ctl
 #   Helper script for volume control
 
-kill -41 $(pidof dwmblocks)     # Signals the dwminho-blocks slot
+kill -38 $(pidof dwmblocks)     # Signals the dwminho-blocks slot
 
 ### Volume control commands ###
 if [[ $1 = 'increase' ]]; then

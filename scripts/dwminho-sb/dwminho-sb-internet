@@ -20,4 +20,4 @@ fi
 
 [ "$(nordvpn status | awk '/^Status:/ {print $2}')" = "Connected" ] && VPN_ICON=" [VPN]" || VPN_ICON=""
 
-printf "${NET_ICON}${VPN_ICON}"
+printf "${VPN_ICON} ${NET_ICON}"

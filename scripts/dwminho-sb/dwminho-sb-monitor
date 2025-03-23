@@ -3,14 +3,14 @@
 # dwminho-sb-monitor
 #  A status monitor module for the dwminho-blocks status bar
 
-CPU_LOAD=$(cat /proc/loadavg | awk '{printf " %2d%%%", 100*$1/16}')
-CPU_TEMP=$(sensors | awk '/Core 0/ {printf "%s", $3}' | sed "s/\.[0-9]//g")
-MEM_AVAL=$(free --si | awk '/Mem/ {printf " %2d%%%", 100*$3/$2}')
-#HDD_AVAL=$(df -h | awk '/\/$/ {printf " %s/%s", $3, $2}')
-
 case $BLOCK_BUTTON in
     1) setsid -f st -c st-floating -g 140x40 -e btop ;;
     6) st -e nvim "$0" ;;
 esac
+
+CPU_LOAD=$(cat /proc/loadavg | awk '{printf " %2d%%%", 100*$1/16}')
+CPU_TEMP=$(sensors | awk '/Core 0/ {printf "%s", $3}' | sed "s/\.[0-9]//g")
+MEM_AVAL=$(free --si | awk '/Mem/ {printf " %2d%%%", 100*$3/$2}')
+#HDD_AVAL=$(df -h | awk '/\/$/ {printf " %s/%s", $3, $2}')
 
 printf "$CPU_LOAD $MEM_AVAL $CPU_TEMP"

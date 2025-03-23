@@ -3,4 +3,9 @@
 # dwminho-sb-bluetooth
 #  A bluetooth module for the dwminho-blocks status bar
 
+case $BLOCK_BUTTON in
+    1) setsid -f st -c st-floating -g 80x30 -e bluetoothctl ;;
+    6) st -e nvim "$0" ;;
+esac
+
 printf ""

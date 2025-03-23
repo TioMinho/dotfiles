@@ -4,7 +4,7 @@
 #  A volume module for the dwminho-blocks status bar
 
 case $BLOCK_BUTTON in
-    1) setsid -f st -c st-floating -g 100x20 -e pulsemixer ;;
+    1) setsid -f st -c st-floating -g 100x20 -e alsamixer ;;
     3) volume-ctl mute ;;
     4) volume-ctl increase ;;
     5) volume-ctl decrease ;;

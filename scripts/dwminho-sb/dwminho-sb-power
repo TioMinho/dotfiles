@@ -3,4 +3,4 @@
 # dwminho-sb-power
 #  A power/login module for the dwminho-blocks status bar
 
-printf "⏻ "
+printf "⏻"
