@@ -12,7 +12,7 @@ mkdir -p $RUN_FOLDR                         # Creates the folder if does not exi
 ### BATTERY NOTIFICATIONS ###
 if [[ "$BAT_STATS" == "Charging" ]]; then
     rm -f $RUN_FOLDR/*
-    dunstify -C 0667
+    #dunstify -C 0667
 
 elif [[ $BAT_LEVEL -le 20 && ! -f "$RUN_FOLDR/battery20notify.lock" ]]; then
     touch $RUN_FOLDR/battery20notify.lock
