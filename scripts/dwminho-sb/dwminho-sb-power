@@ -3,4 +3,9 @@
 # dwminho-sb-power
 #  A power/login module for the dwminho-blocks status bar
 
+case $BLOCK_BUTTON in
+    1) setsid -f powersession-ctl ;;
+    6) st -e nvim "$0" ;;
+esac
+
 printf "⏻"

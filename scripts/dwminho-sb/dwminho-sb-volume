@@ -12,18 +12,7 @@ case $BLOCK_BUTTON in
 esac
 
 VOLUME=$(wpctl get-volume @DEFAULT_AUDIO_SINK@)
+VOL_LEVL=$(echo $VOLUME | sed "s/\.//g" | awk '{printf "%3d", $2}')
 
-if [ -n "$(echo $VOLUME | awk '/MUTED/')" ]; then
-    VOL_ICON="󰝟"
-else
-    VOL_LEVL=$(echo $VOLUME | sed "s/\.//g" | awk '{printf "%d", $2}')
-    if [ "$VOL_LEVL" -ge 70 ]; then
-        VOL_ICON="󰕾"
-    elif [ "$VOL_LEVL" -ge 30 ]; then
-        VOL_ICON="󰖀"
-    else
-        VOL_ICON="󰕿"
-    fi
-fi
-
-printf "$VOL_ICON"
+[[ -n "$(echo $VOLUME | awk '/MUTED/')" ]] && VOL_ICON="" || VOL_ICON=""
+printf "$VOL_ICON $VOL_LEVL%%"

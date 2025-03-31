@@ -33,8 +33,8 @@ fi
 
 
 PROGRESS_BAR=$(for i in `seq 1 $(( VOL_LEVL / 5))`; do echo -n "$BAR"; done)
-PROGRESS_PAD=$(for i in `seq 0 $(( 23 - VOL_LEVL / 5))`; do echo -ne '─'; done)
+PROGRESS_PAD=$(for i in `seq 0 $(( 19 - VOL_LEVL / 5))`; do echo -ne '─'; done)
 
-printf -v PROGRESS_TXT -- "%s%s [%4s]" "$PROGRESS_BAR" "$PROGRESS_PAD" "$PROGRESS_VOL"
+printf -v PROGRESS_TXT -- "%s%s [%4s]" "${PROGRESS_BAR:0:20}" "$PROGRESS_PAD" "$PROGRESS_VOL"
 
 dunstify -a "volume-ctl" -u low -I "$ICON" -h string:x-dunst-stack-tag:volumectl "" "$PROGRESS_TXT"

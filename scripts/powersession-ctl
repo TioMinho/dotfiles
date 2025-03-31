@@ -1,0 +1,30 @@
+#!/bin/bash
+#
+# powersession-ctl
+#  A dmenu-based script for power management and session control
+
+DMENU_PROMPT=" $USER ($(uptime -p))"
+DMENU_OPTIONS=(" Lock Screen" " Suspend" " Log Out" "󰜉 Reboot" "⏻ Power Off")
+
+POWER_OPTION=$(printf "%s\n" "${DMENU_OPTIONS[@]}" | dmenu -l 5 -z 350 -bw 2 -noi -p "$DMENU_PROMPT")
+
+case $POWER_OPTION in
+    ${DMENU_OPTIONS[0]})
+        
+        ;;
+    ${DMENU_OPTIONS[1]})
+        systemctl suspend;
+        ;;
+    ${DMENU_OPTIONS[2]})
+        killall dwm
+        ;;
+    ${DMENU_OPTIONS[3]})
+        POWER_CONFIRM=$(printf "%s\n" "No" "Yes" | dmenu -l 2 -z 225 -bw 2 -noi -p "(Reboot) Are you sure?")
+        [[ $POWER_CONFIRM = "Yes" ]] && systemctl reboot
+        ;;
+    ${DMENU_OPTIONS[4]})
+        POWER_CONFIRM=$(printf "%s\n" "No" "Yes" | dmenu -l 2 -z 225 -bw 2 -noi -p "(Shutdown) Are you sure?")
+        [[ $POWER_CONFIRM = "Yes" ]] && systemctl poweroff
+        ;;
+
+esac

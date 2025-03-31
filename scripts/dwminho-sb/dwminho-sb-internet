@@ -11,7 +11,7 @@ esac
 
 # PRINTING
 if [ "$(cat /sys/class/net/w*/operstate 2>/dev/null)" = "up" ]; then
-    NET_ICON="󰖩"
+    NET_ICON=""
 elif [ "$(cat /sys/class/net/e*/operstate 2>/dev/null)" = "up" ]; then
     NET_ICON="󰈀"
 else
@@ -20,4 +20,4 @@ fi
 
 [ "$(nordvpn status | awk '/^Status:/ {print $2}')" = "Connected" ] && VPN_ICON=" [VPN]" || VPN_ICON=""
 
-printf "${VPN_ICON} ${NET_ICON}"
+printf "${VPN_ICON} ${NET_ICON} "
