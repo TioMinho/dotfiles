@@ -1,0 +1,5 @@
+# UNPLUG: Triggered when switching to battery
+ACTION=="change", SUBSYSTEM=="power_supply", ATTRS{type}=="Mains", ATTRS{online}=="0", RUN+="/usr/bin/systemd-run --machine=minho@.host --user /home/minho/.local/bin/dwminho-sb-battery unplug"
+
+# PLUG: Triggered when switching to AC
+ACTION=="change", SUBSYSTEM=="power_supply", ATTRS{type}=="Mains", ATTRS{online}=="1", RUN+="/usr/bin/systemd-run --machine=minho@.host --user /home/minho/.local/bin/dwminho-sb-battery plug"

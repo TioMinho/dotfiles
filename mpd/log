@@ -1,0 +1,27 @@
+2025-05-10T13:02:37 exception: Failed to open "/home/minho/.local/state/mpd/state": No such file or directory
+2025-05-10T13:02:37 update: added /01 - Молчат Дома - Дома Молчат.flac
+2025-05-10T13:02:51 mixer: Failed to read mixer for "default detected output": no such mixer control: PCM
+2025-05-10T13:04:45 exception: Failed to open "/home/minho/.local/state/mpd/state": No such file or directory
+2025-05-10T13:43:44 exception: Failed to open "/home/minho/.local/state/mpd/state": No such file or directory
+2025-05-10T14:01:57 exception: Failed to open "/home/minho/.local/state/mpd/state": No such file or directory
+2025-05-10T14:02:52 mixer: Failed to read mixer for "default detected output": no such mixer control: PCM
+2025-05-10T14:10:46 mixer: Failed to read mixer for "default detected output": no such mixer control: PCM
+2025-05-10T14:14:12 exception: Bad song index
+2025-05-10T14:15:49 mixer: Failed to read mixer for "default detected output": no such mixer control: PCM
+2025-05-10T14:18:46 output: Failed to open mixer for "default detected output": no such mixer control: PCM
+2025-05-10T14:21:08 output: Failed to open mixer for "default detected output": no such mixer control: PCM
+2025-05-10T14:21:41 output: Failed to open mixer for "default detected output": no such mixer control: PCM
+2025-05-10T14:21:45 output: Failed to open mixer for "default detected output": no such mixer control: PCM
+2025-05-10T14:22:10 output: Failed to open mixer for "default detected output": no such mixer control: PCM
+2025-05-10T14:23:23 output: Failed to open mixer for "default detected output": no such mixer control: PCM
+2025-05-10T14:24:45 output: Failed to open mixer for "default detected output": no such mixer control: PCM
+2025-05-10T14:25:53 output: Failed to open mixer for "default detected output": no such mixer control: PCM
+2025-05-10T14:26:15 output: Failed to open mixer for "default detected output": no such mixer control: PCM
+2025-05-10T14:27:25 output: Failed to open mixer for "default detected output": no such mixer control: PCM
+2025-05-10T14:27:46 output: Failed to open mixer for "default detected output": no such mixer control: PCM
+2025-05-10T14:29:54 player: played "01 - Молчат Дома - Дома Молчат.flac"
+2025-05-10T14:30:07 output: Failed to open mixer for "default detected output": no such mixer control: PCM
+2025-05-10T14:30:39 output: Failed to open mixer for "default detected output": no such mixer control: PCM
+2025-05-10T14:32:33 output: Failed to open mixer for "default detected output": no such mixer control: PCM
+2025-05-10T14:32:49 output: Failed to open mixer for "default detected output": no such mixer control: PCM
+2025-05-10T14:33:32 player: played "01 - Молчат Дома - Дома Молчат.flac"

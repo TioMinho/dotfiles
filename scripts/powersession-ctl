@@ -10,7 +10,7 @@ POWER_OPTION=$(printf "%s\n" "${DMENU_OPTIONS[@]}" | dmenu -l 5 -z 350 -bw 2 -no
 
 case $POWER_OPTION in
     ${DMENU_OPTIONS[0]})
-        
+        slock
         ;;
     ${DMENU_OPTIONS[1]})
         systemctl suspend;

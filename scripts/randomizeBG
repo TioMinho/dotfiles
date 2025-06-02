@@ -7,9 +7,11 @@
 #       between BGs. I tested magick but unfortunately it was a bit slow
 
 BG_FOLDER=~/Pictures/wallpapers
+BG_FILE_LINK=$BG_FOLDER/current
 
 while true; do
     BG_FILE=$(ls $BG_FOLDER/*.png | shuf -n 1)
+    ln -fs $BG_FILE $BG_FILE_LINK
     feh --bg-scale --no-fehbg $BG_FILE
     sleep 5m
 done
