@@ -8,6 +8,7 @@ case $BLOCK_BUTTON in
     6) st -e nvim "$0" ;;
 esac
 
+## STATUS MONITOR DISPLAY ##
 CPU_LOAD=$(cat /proc/loadavg | awk '{printf " %2d%%%", 100*$1/16}')
 CPU_TEMP=$(sensors | awk '/Core 0/ {printf "%s", $3}' | sed "s/\.[0-9]//g")
 MEM_AVAL=$(free --si | awk '/Mem/ {printf " %2d%%%", 100*$3/$2}')

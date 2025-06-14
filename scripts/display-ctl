@@ -1,0 +1,49 @@
+#!/bin/bash
+#
+# display-ctl
+#  A dmenu-based script for managing displays
+
+# AUXILIARY VARIABLES
+INTERN=eDP1
+EXTERN=HDMI2
+DEVICE=card2-HDMI-A-2
+DMENU_OPTIONS=("󰌢  + 󰍹  Extend screen" "󰌢  = 󰍹  Mirror screen" "󰌢  / 󰶐  PC Only" "󰛧  / 󰍹  External only" "󰍜  Start ARandR")
+
+# ARGUMENT PROCESSING
+case $1 in
+    -m | --menu)   ACTION="$(printf "%s\n" "${DMENU_OPTIONS[@]}" | dmenu -l 5 -z 350 -bw 2 -noi -p "PROJECT DISPLAY")" ;;
+    -a | --action) ACTION="${DMENU_OPTIONS[$2-1]}" ;;
+esac
+
+# DISPLAY/MONITOR ACTION
+case $ACTION in
+    ${DMENU_OPTIONS[0]}) 
+        xrandr --output "$INTERN" --primary --auto
+        xrandr --output "$EXTERN" --right-of "$INTERN" --auto
+        ;;
+
+    ${DMENU_OPTIONS[1]}) 
+        xrandr --output "$INTERN" --primary --auto
+        xrandr --output "$EXTERN" --same-as "$INTERN" --auto
+        ;;
+
+    ${DMENU_OPTIONS[2]}) 
+        xrandr --output "$INTERN" --primary --auto 
+        xrandr --output "$EXTERN" --off
+        ;;
+
+    ${DMENU_OPTIONS[3]})
+        [[ "$(cat /sys/class/drm/${DEVICE}/status)" = "disconnected" ]] && exit 1
+        xrandr --output "$INTERN" --off
+        xrandr --output "$EXTERN" --primary --auto 
+        ;;
+
+    ${DMENU_OPTIONS[4]}) 
+        st -c st-floating -g 100x40 -e arandr 
+        ;;
+
+    *) 
+        echo "Wrong action!" 
+        ;;
+
+esac

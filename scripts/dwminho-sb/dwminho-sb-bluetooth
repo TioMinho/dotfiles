@@ -8,4 +8,7 @@ case $BLOCK_BUTTON in
     6) st -e nvim "$0" ;;
 esac
 
-printf "󰂯"
+### BATTERY STATUS DISPLAY ###
+BT_DEV_CONNECTED=$(bluetoothctl devices Connected | grep Device | wc -l)
+
+printf "󰂯[${BT_DEV_CONNECTED}]"

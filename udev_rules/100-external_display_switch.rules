@@ -1,0 +1,1 @@
+ACTION=="change", SUBSYSTEM=="drm", ENV{DISPLAY}=":0", ENV{XAUTHORITY}="/home/minho/.Xauthority", RUN+="/home/minho/.local/bin/display-ctl -a 5"

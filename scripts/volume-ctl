@@ -5,25 +5,22 @@
 
 kill -38 $(pidof dwmblocks)     # Signals the dwminho-blocks slot
 
-### Volume control commands ###
-if [[ $1 = 'increase' ]]; then
-    wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ --limit 1.2
-elif [[ $1 = 'decrease' ]]; then
-    wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
-elif [[ $1 = 'mute' ]]; then
-    wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
-elif [[ $1 = 'mutemic' ]]; then
+### VOLUME CONTROL COMMANDS ###
+if   [[ $1 = 'increase' ]]; then wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ --limit 1.2
+elif [[ $1 = 'decrease' ]]; then wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+elif [[ $1 = 'mute'     ]]; then wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+elif [[ $1 = 'mutemic'  ]]; then 
     wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
     exit 0
 fi
 
-### Volume display notification ###
+### VOLUME DISPLAY NOTIFICATION ###
 ICON="/usr/share/icons/Papirus-Dark/16x16/actions/audio-volume-high.svg"
 
 VOLUME=$(wpctl get-volume @DEFAULT_AUDIO_SINK@)
 VOL_LEVL=$(echo "$VOLUME" | sed "s/\.//g" | awk '{printf "%d", $2}')
 
-if [[ -n "$(echo $VOLUME | awk '/MUTED/')" ]]; then
+if [[ -n "$(echo $VOLUME | grep 'MUTED')" ]]; then
     BAR="┇"
     PROGRESS_VOL="MUTE"
 else
@@ -31,10 +28,10 @@ else
     PROGRESS_VOL="${VOL_LEVL}%"
 fi
 
-
 PROGRESS_BAR=$(for i in `seq 1 $(( VOL_LEVL / 5))`; do echo -n "$BAR"; done)
 PROGRESS_PAD=$(for i in `seq 0 $(( 19 - VOL_LEVL / 5))`; do echo -ne '─'; done)
 
 printf -v PROGRESS_TXT -- "%s%s [%4s]" "${PROGRESS_BAR:0:20}" "$PROGRESS_PAD" "$PROGRESS_VOL"
 
+aplay -qs 3000 /usr/share/sounds/dwminho/fx_action.wav &
 dunstify -a "volume-ctl" -u low -I "$ICON" -h string:x-dunst-stack-tag:volumectl "" "$PROGRESS_TXT"

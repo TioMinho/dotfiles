@@ -1,0 +1,13 @@
+#!/bin/bash
+#
+# wttr_monitor
+#  A simple script for monitoring the weather using wttr.in
+
+LOCATION="helsinki"
+
+while true; do
+    curl "https://wttr.in/$LOCATION?format=1" -o ~/.wttr
+    sleep 1h
+done
+
+

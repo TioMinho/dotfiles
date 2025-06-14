@@ -11,6 +11,7 @@ case $BLOCK_BUTTON in
     6) st -e nvim "$0" ;;
 esac
 
+### VOLUME STATUS DISPLAY ###
 VOLUME=$(wpctl get-volume @DEFAULT_AUDIO_SINK@)
 VOL_LEVL=$(echo $VOLUME | sed "s/\.//g" | awk '{printf "%3d", $2}')
 

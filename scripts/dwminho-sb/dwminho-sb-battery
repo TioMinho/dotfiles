@@ -3,6 +3,7 @@
 # dwminho-st-battery
 #  Battery module for the dwminho-blocks status bar
 
+### VARIABLES AND PREPROCESSING
 BAT_STATS=$(cat /sys/class/power_supply/BAT?/status)
 BAT_LEVEL=$(cat /sys/class/power_supply/BAT?/capacity)
 
@@ -15,21 +16,28 @@ if [[ $1 == "plug" ]]; then
     dunstify -C 0667
     touch $RUN_FOLDR/battery10notify.lock
     touch $RUN_FOLDR/battery20notify.lock
+    aplay /usr/share/sounds/dwminho/fx_connect.wav
 
 elif [[ $1 == "unplug" ]]; then
     rm -f $RUN_FOLDR/*
+    aplay /usr/share/sounds/dwminho/fx_disconnect.wav
+
 fi
 
 # Low-battery level warnings
-if [[ $BAT_LEVEL -le 20 && ! -f "$RUN_FOLDR/battery20notify.lock" ]]; then
+if [[ $BAT_LEVEL -le 10 && ! -f "$RUN_FOLDR/battery10notify.lock" ]]; then
+    touch $RUN_FOLDR/battery10notify.lock
+    touch $RUN_FOLDR/battery20notify.lock
+    ICON="/usr/share/icons/Papirus-Dark/16x16/panel/battery-010.svg"
+    dunstify -r 0667 -u critical -I "$ICON" -h string:x-dunst-stack-tag:batterynotify "WARNING" "Battery below 10%"
+    aplay /usr/share/sounds/dwminho/fx_notify_normal.wav
+
+elif [[ $BAT_LEVEL -le 20 && ! -f "$RUN_FOLDR/battery20notify.lock" ]]; then
     touch $RUN_FOLDR/battery20notify.lock
     ICON="/usr/share/icons/Papirus-Dark/16x16/panel/battery-020.svg"
     dunstify -r 0667 -u normal -I "$ICON" -h string:x-dunst-stack-tag:batterynotify "WARNING" "Battery below 20%"
+    aplay /usr/share/sounds/dwminho/fx_notify_urgent.wav
 
-elif [[ $BAT_LEVEL -le 10 && ! -f "$RUN_FOLDR/battery10notify.lock" ]]; then
-    touch $RUN_FOLDR/battery10notify.lock
-    ICON="/usr/share/icons/Papirus-Dark/16x16/panel/battery-010.svg"
-    dunstify -r 0667 -u critical -I "$ICON" -h string:x-dunst-stack-tag:batterynotify "WARNING" "Battery below 10%"
 fi
 
 ### BATTERY STATUS DISPLAY ###
