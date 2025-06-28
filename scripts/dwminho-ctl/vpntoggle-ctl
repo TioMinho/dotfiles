@@ -1,0 +1,11 @@
+#!/bin/bash
+# ------------------------------------------------------------------------------
+# vpntoggle-ctl  (c) Copyright 2025-  Minho <minhotmog@gmail.com>
+#  A simple script for connecting/disconnecting the VPN
+# ------------------------------------------------------------------------------
+
+if [[ "$(nordvpn status | grep 'Connected')" ]]; then 
+    nordvpn disconnect && nordvpn set killswitch off
+else
+    nordvpn connect && nordvpn set killswitch on
+fi

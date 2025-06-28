@@ -36,6 +36,7 @@ opt.wrap = false				            -- Disable line wrapping
 opt.expandtab = true                        -- Idents with spaces (better for column numbering)
 opt.tabstop = 4					            -- Identation size
 opt.signcolumn = "yes"				        -- Always shows the sign column
+opt.termguicolors = true                    -- Enable true color terminal (24-bit RGB values)
 
 -- Coding behaviour
 opt.formatoptions = "tcqjroln"			    -- Autoformat text options

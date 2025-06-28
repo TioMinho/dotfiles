@@ -1,0 +1,38 @@
+#!/bin/bash
+# -----------------------------------------------------------------------------
+# volume-ctl  (c) Copyright 2025-  Minho <minhotmog@gmail.com>
+#  Helper script for volume control
+# -----------------------------------------------------------------------------
+
+kill -38 $(pidof dwmblocks)     # Signals the dwminho-blocks slot
+
+#  VOLUME CONTROL COMMANDS ----------------------------------------------------
+case $1 in
+    "increase") wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ --limit 1.2 ;;
+    "decrease") wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- ;;
+    "mute")     wpctl set-mute   @DEFAULT_AUDIO_SINK@ toggle ;;
+    "mutemic")  wpctl set-mute   @DEFAULT_AUDIO_SOURCE@ toggle; exit 0 ;;
+esac
+
+#  VOLUME DISPLAY NOTIFICATION -------------------------------------------------
+ICON="/usr/share/icons/Papirus-Dark/16x16/actions/audio-volume-high.svg"
+
+VOL_INFO=$(wpctl get-volume @DEFAULT_AUDIO_SINK@)
+VOL_LEVL=$(echo "$VOL_INFO" | sed "s/\.//g" | awk '{printf "%d", $2}')
+
+if [[ -n "$(echo $VOL_INFO | grep 'MUTED')" ]]; then
+    BAR="┇"
+    PROGRESS_VOL="MUTE"
+else
+    BAR="┃"
+    PROGRESS_VOL="${VOL_LEVL}%"
+fi
+
+PROGRESS_BAR=$(for i in `seq 1 $(( VOL_LEVL / 5))`; do echo -n "$BAR"; done)
+PROGRESS_PAD=$(for i in `seq 0 $(( 19 - VOL_LEVL / 5))`; do echo -ne '─'; done)
+
+printf -v PROGRESS_TXT -- \
+    "%s%s [%4s]" "${PROGRESS_BAR:0:20}" "$PROGRESS_PAD" "$PROGRESS_VOL"
+
+dunstify -a "volume-ctl" -u low -I "$ICON" \
+    -h string:x-dunst-stack-tag:volumectl "" "$PROGRESS_TXT"

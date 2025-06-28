@@ -1,19 +1,20 @@
 #!/bin/bash
-#
-# dwminho-st-battery
+# ------------------------------------------------------------------------------
+# dwminho-st-battery  (c) Copyright 2025-  Minho <minhotmog@gmail.com>
 #  Battery module for the dwminho-blocks status bar
+# ------------------------------------------------------------------------------
 
-### VARIABLES AND PREPROCESSING
+#  VARIABLES AND PREPROCESSING -------------------------------------------------
 BAT_STATS=$(cat /sys/class/power_supply/BAT?/status)
 BAT_LEVEL=$(cat /sys/class/power_supply/BAT?/capacity)
 
 RUN_FOLDR=/run/user/$UID/dwminho-sb      # Temporary folder for the .lock files
 mkdir -p $RUN_FOLDR                      # Creates the folder if does not exist
 
-### BATTERY NOTIFICATIONS ###
-# Plug/Unplug commands to be processed from a UDEV rule
+#  BATTERY HOT-PLUGGING --------------------------------------------------------
 if [[ $1 == "plug" ]]; then 
     dunstify -C 0667
+    touch $RUN_FOLDR/battery05notify.lock
     touch $RUN_FOLDR/battery10notify.lock
     touch $RUN_FOLDR/battery20notify.lock
     aplay /usr/share/sounds/dwminho/fx_connect.wav
@@ -24,27 +25,43 @@ elif [[ $1 == "unplug" ]]; then
 
 fi
 
-# Low-battery level warnings
-if [[ $BAT_LEVEL -le 10 && ! -f "$RUN_FOLDR/battery10notify.lock" ]]; then
+#  BATTERY NOTIFICATIONS -------------------------------------------------------
+ICON_PATH="/usr/share/icons/Papirus-Dark/16x16/panel"
+
+if [[ $BAT_LEVEL -le 5 && ! -f "$RUN_FOLDR/battery05notify.lock" ]]; then
+    touch $RUN_FOLDR/battery05notify.lock
     touch $RUN_FOLDR/battery10notify.lock
     touch $RUN_FOLDR/battery20notify.lock
-    ICON="/usr/share/icons/Papirus-Dark/16x16/panel/battery-010.svg"
-    dunstify -r 0667 -u critical -I "$ICON" -h string:x-dunst-stack-tag:batterynotify "WARNING" "Battery below 10%"
+    systemctl suspend   # Safety suspend to avoid battery full discharge
+
+elif [[ $BAT_LEVEL -le 10 && ! -f "$RUN_FOLDR/battery10notify.lock" ]]; then
+    touch $RUN_FOLDR/battery10notify.lock
+    touch $RUN_FOLDR/battery20notify.lock
     aplay /usr/share/sounds/dwminho/fx_notify_normal.wav
+
+    dunstify -r 0667 -u critical -I "$ICON_PATH/battery-010.svg" \
+        -h string:x-dunst-stack-tag:batterynotify "WARNING" "Battery below 10%"
 
 elif [[ $BAT_LEVEL -le 20 && ! -f "$RUN_FOLDR/battery20notify.lock" ]]; then
     touch $RUN_FOLDR/battery20notify.lock
-    ICON="/usr/share/icons/Papirus-Dark/16x16/panel/battery-020.svg"
-    dunstify -r 0667 -u normal -I "$ICON" -h string:x-dunst-stack-tag:batterynotify "WARNING" "Battery below 20%"
-    aplay /usr/share/sounds/dwminho/fx_notify_urgent.wav
+    aplay /usr/share/sounds/dwminho/fx_notify_normal.wav
+
+    dunstify -r 0667 -u normal -I "$ICON_PATH/battery-020.svg" \
+        -h string:x-dunst-stack-tag:batterynotify "WARNING" "Battery below 20%"
 
 fi
 
-### BATTERY STATUS DISPLAY ###
-if   [ "$BAT_LEVEL" -ge 75 ]; then [ "$BAT_STATS" = "Charging" ] && BAT_ICON="󱊦" || BAT_ICON="󱊣"
-elif [ "$BAT_LEVEL" -ge 50 ]; then [ "$BAT_STATS" = "Charging" ] && BAT_ICON="󱊥" || BAT_ICON="󱊢"
-elif [ "$BAT_LEVEL" -ge 26 ]; then [ "$BAT_STATS" = "Charging" ] && BAT_ICON="󱊤" || BAT_ICON="󱊡"
-else                               [ "$BAT_STATS" = "Charging" ] && BAT_ICON="󰢟" || BAT_ICON="󱃍"
+#  BATTERY STATUS DISPLAY ------------------------------------------------------
+if [[ "$BAT_STATS" = "Charging" ]]; then
+    [ "$BAT_LEVEL" -le 100 ] && BAT_ICON="󱊦"
+    [ "$BAT_LEVEL" -le 75  ] && BAT_ICON="󱊥"
+    [ "$BAT_LEVEL" -le 50  ] && BAT_ICON="󱊤"
+    [ "$BAT_LEVEL" -le 25  ] && BAT_ICON="󰢟"
+else
+    [ "$BAT_LEVEL" -le 100 ] && BAT_ICON="󱊣"
+    [ "$BAT_LEVEL" -le 75  ] && BAT_ICON="󱊢"
+    [ "$BAT_LEVEL" -le 50  ] && BAT_ICON="󱊡"
+    [ "$BAT_LEVEL" -le 25  ] && BAT_ICON="󱃍"
 fi
 
 printf "${BAT_ICON} ${BAT_LEVEL}%%"

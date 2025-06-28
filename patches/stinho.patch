@@ -8,7 +8,7 @@ index 0000000..9427cf1
 +!*.*
 +*.o
 diff --git a/config.def.h b/config.def.h
-index 2cd740a..8a815db 100644
+index 2cd740a..eca1824 100644
 --- a/config.def.h
 +++ b/config.def.h
 @@ -5,7 +5,7 @@
@@ -25,7 +25,7 @@ index 2cd740a..8a815db 100644
  unsigned int tabspaces = 8;
  
 +/* bg opacity */
-+float alpha = 0.8;
++float alpha = 0.9;
 +
  /* Terminal colors (16 first used in escape sequence) */
  static const char *colorname[] = {
@@ -38,14 +38,14 @@ index 2cd740a..8a815db 100644
 -	"magenta3",
 -	"cyan3",
 -	"gray90",
-+	"#2A2A2A",
-+	"#D54E53",
-+	"#B9CA4A",
-+	"#E7C547",
-+	"#7AA6DA",
-+	"#C397D8",
-+	"#70C0B1",
-+	"#EAEAEA",
++	"#181819",
++	"#FC5D7C",
++	"#9ED072",
++	"#E7C664",
++	"#76CCE0",
++	"#B39DF3",
++	"#F39660",
++	"#E2E2E3",
  
  	/* 8 bright colors */
 -	"gray50",
@@ -56,24 +56,25 @@ index 2cd740a..8a815db 100644
 -	"magenta",
 -	"cyan",
 -	"white",
-+	"#969896",
-+	"#D54E53",
-+	"#B9CA4A",
-+	"#E7C547",
-+	"#7AA6DA",
-+	"#C397D8",
-+	"#70C0B1",
++	"#7F8490",
++	"#FC5D7C",
++	"#9ED072",
++	"#E7C664",
++	"#76CCE0",
++	"#B39DF3",
++	"#F39660",
 +	"#FFFFFF",
  
  	[255] = 0,
  
  	/* more colors can be added after 255 to use with DefaultXX */
 -	"#cccccc",
-+	"#EAEAEA",
- 	"#555555",
+-	"#555555",
 -	"gray90", /* default foreground colour */
 -	"black", /* default background colour */
-+	"#EAEAEA", /* default foreground colour */
++	"#E2E2E3",
++	"#595F6F",
++	"#E2E2E3", /* default foreground colour */
 +	"#000000", /* default background colour */
  };
  
@@ -116,7 +117,7 @@ index 2cd740a..8a815db 100644
  	{ XK_BackSpace,     Mod1Mask,       "\033\177",      0,    0},
 diff --git a/config.h b/config.h
 new file mode 100644
-index 0000000..8a815db
+index 0000000..eca1824
 --- /dev/null
 +++ b/config.h
 @@ -0,0 +1,481 @@
@@ -216,36 +217,36 @@ index 0000000..8a815db
 +unsigned int tabspaces = 8;
 +
 +/* bg opacity */
-+float alpha = 0.8;
++float alpha = 0.9;
 +
 +/* Terminal colors (16 first used in escape sequence) */
 +static const char *colorname[] = {
 +	/* 8 normal colors */
-+	"#2A2A2A",
-+	"#D54E53",
-+	"#B9CA4A",
-+	"#E7C547",
-+	"#7AA6DA",
-+	"#C397D8",
-+	"#70C0B1",
-+	"#EAEAEA",
++	"#181819",
++	"#FC5D7C",
++	"#9ED072",
++	"#E7C664",
++	"#76CCE0",
++	"#B39DF3",
++	"#F39660",
++	"#E2E2E3",
 +
 +	/* 8 bright colors */
-+	"#969896",
-+	"#D54E53",
-+	"#B9CA4A",
-+	"#E7C547",
-+	"#7AA6DA",
-+	"#C397D8",
-+	"#70C0B1",
++	"#7F8490",
++	"#FC5D7C",
++	"#9ED072",
++	"#E7C664",
++	"#76CCE0",
++	"#B39DF3",
++	"#F39660",
 +	"#FFFFFF",
 +
 +	[255] = 0,
 +
 +	/* more colors can be added after 255 to use with DefaultXX */
-+	"#EAEAEA",
-+	"#555555",
-+	"#EAEAEA", /* default foreground colour */
++	"#E2E2E3",
++	"#595F6F",
++	"#E2E2E3", /* default foreground colour */
 +	"#000000", /* default background colour */
 +};
 +
@@ -602,7 +603,7 @@ index 0000000..8a815db
 +	"@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_"
 +	"`abcdefghijklmnopqrstuvwxyz{|}~";
 diff --git a/st.c b/st.c
-index 57c6e96..7627eee 100644
+index 03b9bc8..13f78bb 100644
 --- a/st.c
 +++ b/st.c
 @@ -43,6 +43,10 @@
@@ -1049,7 +1050,7 @@ index 57c6e96..7627eee 100644
  
  	memmove(&line[dst], &line[src], size * sizeof(Glyph));
  	tclearregion(src, term.c.y, dst - 1, term.c.y);
-@@ -2082,7 +2180,7 @@ tdumpline(int n)
+@@ -2086,7 +2184,7 @@ tdumpline(int n)
  	char buf[UTF_SIZ];
  	const Glyph *bp, *end;
  
@@ -1058,7 +1059,7 @@ index 57c6e96..7627eee 100644
  	end = &bp[MIN(tlinelen(n), term.col) - 1];
  	if (bp != end || bp->u != ' ') {
  		for ( ; bp <= end; ++bp)
-@@ -2469,11 +2567,11 @@ check_control_code:
+@@ -2473,11 +2571,11 @@ check_control_code:
  	if (selected(term.c.x, term.c.y))
  		selclear();
  
@@ -1072,7 +1073,7 @@ index 57c6e96..7627eee 100644
  	}
  
  	if (IS_SET(MODE_INSERT) && term.c.x+width < term.col) {
-@@ -2486,7 +2584,7 @@ check_control_code:
+@@ -2490,7 +2588,7 @@ check_control_code:
  			tnewline(1);
  		else
  			tmoveto(term.col - width, term.c.y);
@@ -1081,7 +1082,7 @@ index 57c6e96..7627eee 100644
  	}
  
  	tsetchar(u, &term.c.attr, term.c.x, term.c.y);
-@@ -2517,6 +2615,11 @@ twrite(const char *buf, int buflen, int show_ctrl)
+@@ -2521,6 +2619,11 @@ twrite(const char *buf, int buflen, int show_ctrl)
  	Rune u;
  	int n;
  
@@ -1093,7 +1094,7 @@ index 57c6e96..7627eee 100644
  	for (n = 0; n < buflen; n += charsize) {
  		if (IS_SET(MODE_UTF8)) {
  			/* process a complete utf8 char */
-@@ -2543,56 +2646,85 @@ twrite(const char *buf, int buflen, int show_ctrl)
+@@ -2547,56 +2650,85 @@ twrite(const char *buf, int buflen, int show_ctrl)
  }
  
  void
@@ -1210,7 +1211,7 @@ index 57c6e96..7627eee 100644
  	if (col > term.col) {
  		bp = term.tabs + term.col;
  
-@@ -2602,26 +2734,16 @@ tresize(int col, int row)
+@@ -2606,26 +2738,16 @@ tresize(int col, int row)
  		for (bp += tabspaces; bp < term.tabs + col; bp += tabspaces)
  			*bp = 1;
  	}
@@ -1240,7 +1241,7 @@ index 57c6e96..7627eee 100644
  }
  
  void
-@@ -2633,14 +2755,15 @@ resettitle(void)
+@@ -2637,14 +2759,15 @@ resettitle(void)
  void
  drawregion(int x1, int y1, int x2, int y2)
  {
@@ -1262,7 +1263,7 @@ index 57c6e96..7627eee 100644
  	}
  }
  
-@@ -2655,14 +2778,15 @@ draw(void)
+@@ -2659,14 +2782,15 @@ draw(void)
  	/* adjust cursor position */
  	LIMIT(term.ocx, 0, term.col-1);
  	LIMIT(term.ocy, 0, term.row-1);

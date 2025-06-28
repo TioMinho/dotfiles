@@ -1,8 +1,10 @@
 #!/bin/bash
-#
-# dwminho-sb-volume
+# ------------------------------------------------------------------------------
+# dwminho-sb-volume  (c) Copyright 2025-  Minho <minhotmog@gmail.com>
 #  A volume module for the dwminho-blocks status bar
+# ------------------------------------------------------------------------------
 
+#  MOUSE SIGNAL HANDLING -------------------------------------------------------
 case $BLOCK_BUTTON in
     1) setsid -f st -c st-floating -g 100x20 -e alsamixer ;;
     3) volume-ctl mute ;;
@@ -11,9 +13,9 @@ case $BLOCK_BUTTON in
     6) st -e nvim "$0" ;;
 esac
 
-### VOLUME STATUS DISPLAY ###
+#  VOLUME STATUS DISPLAY -------------------------------------------------------
 VOLUME=$(wpctl get-volume @DEFAULT_AUDIO_SINK@)
 VOL_LEVL=$(echo $VOLUME | sed "s/\.//g" | awk '{printf "%3d", $2}')
-
 [[ -n "$(echo $VOLUME | awk '/MUTED/')" ]] && VOL_ICON="" || VOL_ICON=""
+
 printf "$VOL_ICON $VOL_LEVL%%"

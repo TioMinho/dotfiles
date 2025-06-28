@@ -1,14 +1,16 @@
 #!/bin/bash
-#
-# dwminho-sb-bluetooth
+# ------------------------------------------------------------------------------
+# dwminho-sb-bluetooth  (c) Copyright 2025-  Minho <minhotmog@gmail.com>
 #  A bluetooth module for the dwminho-blocks status bar
+# ------------------------------------------------------------------------------
 
+#  MOUSE SIGNAL HANDLING -------------------------------------------------------
 case $BLOCK_BUTTON in
     1) setsid -f st -c st-floating -g 80x30 -e bluetoothctl ;;
     6) st -e nvim "$0" ;;
 esac
 
-### BATTERY STATUS DISPLAY ###
+#  BATTERY STATUS DISPLAY ------------------------------------------------------
 BT_DEV_CONNECTED=$(bluetoothctl devices Connected | grep Device | wc -l)
 
-printf "󰂯[${BT_DEV_CONNECTED}]"
+printf "󰂯(${BT_DEV_CONNECTED})"

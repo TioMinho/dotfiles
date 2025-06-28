@@ -1,11 +1,14 @@
 #!/bin/bash
-#
-# dwminho-sb-power
+# ------------------------------------------------------------------------------
+# dwminho-sb-power  (c) Copyright 2025-  Minho <minhotmog@gmail.com>
 #  A power/login module for the dwminho-blocks status bar
+# ------------------------------------------------------------------------------
 
+#  MOUSE SIGNAL HANDLING -------------------------------------------------------
 case $BLOCK_BUTTON in
     1) setsid -f powersession-ctl ;;
     6) st -e nvim "$0" ;;
 esac
 
+#  POWER BUTTON PRINTING -------------------------------------------------------
 printf "⏻"
