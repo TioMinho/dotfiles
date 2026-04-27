@@ -6,16 +6,17 @@
 
 #  MOUSE SIGNAL HANDLING -------------------------------------------------------
 case $BLOCK_BUTTON in
-    1) setsid -f st -c st-floating -g 100x20 -e alsamixer ;;
-    3) volume-ctl mute ;;
-    4) volume-ctl increase ;;
-    5) volume-ctl decrease ;;
-    6) st -e nvim "$0" ;;
+1) setsid -f st -c st-floating -g 100x20 -e alsamixer ;;
+3) volume-ctl mute ;;
+4) volume-ctl increase ;;
+5) volume-ctl decrease ;;
+6) st -e nvim "$0" ;;
 esac
 
 #  VOLUME STATUS DISPLAY -------------------------------------------------------
 VOLUME=$(wpctl get-volume @DEFAULT_AUDIO_SINK@)
 VOL_LEVL=$(echo $VOLUME | sed "s/\.//g" | awk '{printf "%3d", $2}')
+
 [[ -n "$(echo $VOLUME | awk '/MUTED/')" ]] && VOL_ICON="" || VOL_ICON=""
 
 printf "$VOL_ICON $VOL_LEVL%%"

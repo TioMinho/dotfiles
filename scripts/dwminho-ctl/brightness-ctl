@@ -6,19 +6,15 @@
 
 #  VOLUME CONTROL COMMANDS -----------------------------------------------------
 case $1 in
-    "increase") brightnessctl -q set 5%+ ;;
-    "decrease") brightnessctl -q set 5%- ;;
+"increase") brightnessctl -q set 5%+ ;;
+"decrease") brightnessctl -q set 5%- ;;
 esac
 
 #  VOLUME DISPLAY NOTIFICATION -------------------------------------------------
-ICON="/usr/share/icons/Papirus-Dark/16x16/actions/brightnesssettings.svg"
-
 BGT_LVL=$(brightnessctl i | awk '/Current/ {print $4}' | sed 's/[()%]//g')
-PROGRESS_BAR=$(for i in `seq 1 $((BGT_LVL / 5))`; do echo -n "┃"; done)
-PROGRESS_PAD=$(for i in `seq 0 $((19 - BGT_LVL / 5))`; do echo -ne '─'; done)
+PROGRESS_BAR=$(for i in $(seq 1 $((BGT_LVL / 5))); do echo -n "|"; done)
+PROGRESS_PAD=$(for i in $(seq 0 $((19 - BGT_LVL / 5))); do echo -ne '-'; done)
 
-printf -v PROGRESS_TXT -- \
-    "%s%s [%4s]" "$PROGRESS_BAR" "$PROGRESS_PAD" "$BGT_LVL%"
+printf -v PROGRESS_TXT -- "%s%s [%4s]" "$PROGRESS_BAR" "$PROGRESS_PAD" "$BGT_LVL%"
 
-dunstify -a "brightness-ctl" -u low -I "$ICON" \
-    -h string:x-dunst-stack-tag:brightnessctl "" "$PROGRESS_TXT"
+dunstify -r 669 -a "brightness-ctl" -u low -i notification-display-brightness-full "Brightness" "$PROGRESS_TXT"

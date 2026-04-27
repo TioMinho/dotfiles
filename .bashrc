@@ -6,7 +6,7 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-# (~/.bash_history): Define total number of lines and appending rules
+# (~/.bash_history): Define total number of lines and appending rules _________
 HISTSIZE=1000
 HISTFILESIZE=2000
 HISTCONTROL=ignoreboth
@@ -14,18 +14,13 @@ HISTCONTROL=ignoreboth
 shopt -s histappend
 shopt -s checkwinsize
 
-# (PS1): Definition of the prompt string #1
+# (PS1): Definition of the prompt string #1 ____________________________________
 PS1='[\[\033[0;32m\]\u\[\033[1;31m\]@\[\033[0;32m\]\h\[\033[0m\] \[\033[0;34m\]\W\[\033[0m\]]\$ '
 
-# (ssh-agent): Enable automatic starting on session (killed after 1hr)
-if ! pgrep -u "$USER" ssh-agent > /dev/null; then
-    ssh-agent -t 1h > "$XDG_RUNTIME_DIR/ssh-agent.env"
-fi
-if [[ ! -f "$SSH_AUTH_SOCK" ]]; then
-    source "$XDG_RUNTIME_DIR/ssh-agent.env" >/dev/null
-fi
+# (zoxide): Starts the "smart cd" functionality
+eval "$(zoxide init bash)"
 
-# Definitions (env. variables, functions, etc.)
+# Definitions (env. variables, functions, etc.) ________________________________
 export EDITOR=nvim
 export GPG_TTY="$(tty)"
 export MANPAGER="less -R --use-color -Dd+r -Du+b"
@@ -39,9 +34,13 @@ export LESS_TERMCAP_so=$'\e[01;33m'
 export LESS_TERMCAP_ue=$'\e[0m'
 export LESS_TERMCAP_us=$'\e[1;4;31m'
 
-# Aliases
-alias ls='ls --color=auto'
+# ALIASES _____________________________________________________________________
+alias ls='ls --color=auto -h --group-directories-first'
 alias grep='grep --color=auto'
+alias df='df -h'
+alias du='du -c -h'
+alias du1='du -h -d 1'
+alias mkdir='mkdir -p'
 
 alias matlabcli='matlab -nodesktop -nosplash'
 alias matlabgui='matlab -nosplash'

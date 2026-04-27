@@ -8,15 +8,21 @@
 
 # Environment variables
 export PATH=$PATH:$HOME/.local/bin:/opt/nvim-linux64/bin:$HOME/.juliaup/bin
-export LIBVA_DRIVER_PATH=/usr/lib/dri/
-export LIBVA_DRIVER_NAME=iHD
-export VDPAU_DRIVER=va_gl
 
+# XDG DIRECTORIES
 export XDG_CONFIG_HOME=$HOME/.config
 export XDG_DATA_HOME=$HOME/.local/share
 export XDG_DATA_DIRS=/usr/local/share:/usr/share
 
+# HARDWARE VIDEO ACCELERATION
+export CUDA_DISABLE_PERF_BOOST=1
+export ANV_DEBUG=video-decode,video-encode
+
 # Autostart X on login (if tty1)
-if [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]]; then
-  startx -- -keeptty >~/.xorg.log 2>&1
-fi
+[[ -z $DISPLAY ]] || return # does not startx if already has a display
+
+case $XDG_VTNR in
+1) exec startx ~/.xinitrc dwm -- -keeptty >~/.xorg.log 2>&1 ;;
+2) exec startx ~/.xinitrc steam -- -keeptty >~/.cagedsteam.log 2>&1 ;;
+*) ;;
+esac

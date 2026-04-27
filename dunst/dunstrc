@@ -8,14 +8,14 @@
     follow = mouse
 
     ### Geometry ###
-    width = (0, 360)
-    height = (0, 300)
+    width = 256
+    height = (0, 128)
     origin = top-right
 
     # Offset from the origin
     offset = (8, 28)
     scale = 0
-    notification_limit = 6
+    notification_limit = 12
 
     ### Progress bar ###
     progress_bar = true
@@ -31,7 +31,7 @@
 
     padding = 8
     horizontal_padding = 8
-    text_icon_padding = 6
+    text_icon_padding = 8
 
     frame_width = 1
     frame_color = "#AE81FF"
@@ -42,7 +42,7 @@
     sort = yes
 
     ### Text ###
-    font = Noto Sans Mono 8
+    font = Noto Sans Mono 9
 
     line_height = 0
     markup = full
@@ -57,7 +57,7 @@
     #   %n  progress value if set without any extra characters
     #   %%  Literal %
     # Markup is allowed
-    format = "<b>%s</b> %b"
+    format = "<b>%s</b>\n%b"
 
     alignment = left
     vertical_alignment = center
@@ -67,18 +67,18 @@
     ignore_newline = no
     stack_duplicates = true
     hide_duplicate_count = false
-    show_indicators = yes
+    show_indicators = no
 
     ### Icons ###
-    enable_recursive_icon_lookup = true
-    icon_theme = Papirus-Dark
+    #enable_recursive_icon_lookup = true
+    #icon_theme = Papirus-Dark,Papirus
     icon_position = left
 
-    min_icon_size = 16
-    max_icon_size = 16
+    min_icon_size = 32
+    max_icon_size = 32
 
     # Paths to default icons (only neccesary when not using recursive icon lookup)
-    icon_path = /usr/share/icons/Papirus-Dark/16x16/status/:/usr/share/icons/Papirus-Dark/16x16/devices/
+    icon_path = /usr/share/icons/Papirus-Dark/16x16/status/:/usr/share/icons/Papirus-Dark/16x16/devices/:/usr/share/icons/Papirus-Dark/48x48/status/
 
     ### History ###
     sticky_history = yes
@@ -93,7 +93,7 @@
     title = Dunst
     class = Dunst
 
-    corner_radius = 4
+    corner_radius = 6
 
     ignore_dbusclose = false
 

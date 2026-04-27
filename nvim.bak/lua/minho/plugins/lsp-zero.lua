@@ -5,7 +5,6 @@ return {
     'VonHeikemen/lsp-zero.nvim',
     branch = 'v3.x',
     dependencies = {
-        'neovim/nvim-lspconfig',
         'williamboman/mason.nvim',
         'williamboman/mason-lspconfig.nvim',
         'hrsh7th/nvim-cmp',
@@ -50,7 +49,7 @@ return {
         mason.setup({})
         mason_lspconfig.setup({})
 
-        require('lspconfig').julials.setup({})
+        vim.lsp.config(julials.setup({}))
         
         -- Configures cmp
         cmp.setup({
